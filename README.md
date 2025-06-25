@@ -53,8 +53,7 @@ Gerenciar os principais processos de uma escola infantil, facilitando o controle
 
 1. **Clone o repositório**
    ```bash
-   git clone https://github.com/seu-usuario/sistema-gerenciamento-escolar-infantil.git
-   cd sistema-gerenciamento-escolar-infantil
+   git clone https://github.com/guimaraes21/Projeto_Gerenciamento_Escolar_Infantil.git
    ```
 2. **Construa e inicie os contêineres**
    ```bash
