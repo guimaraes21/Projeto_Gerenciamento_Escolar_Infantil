@@ -1,0 +1,196 @@
+/*
+# Modelo Entidade-Relacionamento (MER): Sistema de Gerenciamento Escolar Infantil
+
+Este arquivo apresenta o Modelo Entidade-Relacionamento (MER) do sistema, detalhando as entidades, atributos e relacionamentos principais que estruturam o banco de dados.
+
+- Utilize este documento como referência para a criação do banco de dados e implementação das entidades no backend.
+*/
+
+# Modelo Entidade-Relacionamento: Sistema de Gerenciamento Escolar Infantil
+
+## Entidades
+
+### Aluno
+- id_aluno (PK)
+- nome
+- data_nascimento
+- genero
+- endereco
+- telefone_contato
+- nome_responsavel
+- cpf_responsavel
+- email_responsavel
+- data_matricula
+- status_matricula
+
+### Professor
+- id_professor (PK)
+- nome
+- cpf
+- data_nascimento
+- genero
+- endereco
+- telefone
+- email
+- data_contratacao
+- formacao_academica
+- status_contrato
+
+### Turma
+- id_turma (PK)
+- nome_turma
+- ano_letivo
+- periodo (matutino/vespertino/integral)
+- capacidade_maxima
+- id_professor_responsavel (FK)
+- faixa_etaria
+- sala
+
+### Disciplina
+- id_disciplina (PK)
+- nome_disciplina
+- descricao
+- carga_horaria
+
+### Aula
+- id_aula (PK)
+- id_turma (FK)
+- id_disciplina (FK)
+- id_professor (FK)
+- data
+- hora_inicio
+- hora_fim
+- conteudo_previsto
+- status_realizada
+
+### Frequencia
+- id_frequencia (PK)
+- id_aluno (FK)
+- id_aula (FK)
+- presente
+- justificativa_falta
+
+### Avaliacao
+- id_avaliacao (PK)
+- id_aluno (FK)
+- id_disciplina (FK)
+- data_avaliacao
+- tipo_avaliacao
+- descricao
+- conceito
+- observacoes
+
+### Matricula
+- id_matricula (PK)
+- id_aluno (FK)
+- id_turma (FK)
+- data_matricula
+- status_matricula
+
+### Pagamento
+- id_pagamento (PK)
+- id_matricula (FK)
+- data_vencimento
+- valor
+- data_pagamento
+- status_pagamento
+- forma_pagamento
+- observacoes
+
+### Material
+- id_material (PK)
+- nome
+- descricao
+- quantidade_disponivel
+- localizacao_estoque
+
+### RequisicaoMaterial
+- id_requisicao (PK)
+- id_professor (FK)
+- id_material (FK)
+- data_requisicao
+- quantidade_requisitada
+- finalidade
+- status_requisicao
+- data_devolucao_prevista
+- data_devolucao_efetiva
+
+### Evento
+- id_evento (PK)
+- nome_evento
+- data_inicio
+- data_fim
+- descricao
+- local
+- responsavel
+- tipo_evento
+
+### ParticipacaoEvento
+- id_participacao (PK)
+- id_evento (FK)
+- id_aluno (FK)
+- presenca
+- observacoes
+
+### Comunicado
+- id_comunicado (PK)
+- titulo
+- conteudo
+- data_envio
+- tipo_comunicado
+- autor
+- publico_alvo
+
+### RecebimentoComunicado
+- id_recebimento (PK)
+- id_comunicado (FK)
+- id_responsavel (FK)
+- data_visualizacao
+- confirmacao_leitura
+
+## Relacionamentos (ajustados)
+
+1. **Professor gerencia Turma** (1:N)
+   - Um professor pode ser responsável por várias turmas
+   - Uma turma tem apenas um professor responsável
+
+2. **Professor ministra Aula** (1:N)
+   - Um professor pode ministrar várias aulas
+   - Uma aula é ministrada por apenas um professor
+
+3. **Turma contém Aula** (1:N)
+   - Uma turma pode ter várias aulas
+   - Uma aula pertence a apenas uma turma
+
+4. **Disciplina está em Aula** (1:N)
+   - Uma disciplina pode estar em várias aulas
+   - Uma aula está associada a apenas uma disciplina
+
+5. **Aluno tem Frequência em Aula** (N:M, via Frequencia)
+   - Um aluno pode ter vários registros de frequência em diferentes aulas
+   - Uma aula pode ter vários registros de frequência de diferentes alunos
+
+6. **Aluno recebe Avaliação em Disciplina** (N:M, via Avaliacao)
+   - Um aluno pode receber várias avaliações em diferentes disciplinas
+   - Uma disciplina pode ter várias avaliações de diferentes alunos
+
+7. **Aluno está em Turma por Matrícula** (N:M, via Matricula)
+   - Um aluno pode ter várias matrículas em diferentes turmas/anos
+   - Uma turma pode ter várias matrículas de diferentes alunos
+
+8. **Matrícula gera Pagamento** (1:N)
+   - Uma matrícula pode gerar vários pagamentos
+   - Um pagamento está associado a apenas uma matrícula
+
+9. **Professor solicita Material** (N:M, via RequisicaoMaterial)
+   - Um professor pode solicitar vários materiais
+   - Um material pode ser solicitado por vários professores
+
+10. **Aluno participa de Evento** (N:M, via ParticipacaoEvento)
+    - Um aluno pode participar de vários eventos
+    - Um evento pode ter vários alunos participantes
+
+11. **Comunicado tem Recebimento** (1:N)
+    - Um comunicado pode ter vários recebimentos
+    - Um recebimento está associado a apenas um comunicado
+    

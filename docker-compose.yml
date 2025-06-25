@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # Serviço do banco de dados PostgreSQL
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db  # Dockerfile específico para configurar o container do banco de dados
+    container_name: escola_infantil_db  # Nome do container do banco de dados
+    restart: always  # Reinicia automaticamente em caso de falha
+    environment:
+      POSTGRES_USER: postgres  # Usuário padrão do PostgreSQL
+      POSTGRES_PASSWORD: postgres  # Senha do usuário
+      POSTGRES_DB: escola_infantil  # Nome do banco de dados a ser criado
+    ports:
+      - "5432:5432"  # Mapeia a porta padrão do PostgreSQL para acesso externo
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Volume para persistência dos dados do banco
+    networks:
+      - escola_network  # Rede interna para comunicação entre os serviços
+
+  # Serviço da aplicação backend (Node.js)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app  # Dockerfile específico para configurar o container da aplicação
+    container_name: escola_infantil_app  # Nome do container da aplicação
+    restart: always  # Reinicia automaticamente em caso de falha
+    depends_on:
+      - db  # Garante que o banco de dados suba antes da aplicação
+    environment:
+      DB_HOST: db  # Host do banco de dados (nome do serviço Docker)
+      DB_USER: postgres  # Usuário do banco
+      DB_PASSWORD: postgres  # Senha do banco
+      DB_NAME: escola_infantil  # Nome do banco
+      DB_PORT: 5432  # Porta do banco
+      PORT: 3000  # Porta da aplicação Node.js
+    ports:
+      - "3000:3000"  # Mapeia a porta da aplicação para acesso externo
+    volumes:
+      - ./APP:/app  # Monta o código-fonte local no container para facilitar o desenvolvimento
+      - /app/node_modules  # Garante que os módulos do Node.js fiquem isolados no container
+    networks:
+      - escola_network  # Rede interna para comunicação entre os serviços
+
+  # Serviço de proxy reverso com Nginx
+  nginx:
+    image: nginx:alpine  # Usa a imagem oficial do Nginx (versão leve)
+    container_name: escola_infantil_nginx  # Nome do container do Nginx
+    restart: always  # Reinicia automaticamente em caso de falha
+    depends_on:
+      - app  # Garante que a aplicação suba antes do Nginx
+    ports:
+      - "80:80"  # Mapeia a porta 80 do host para o Nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf  # Monta o arquivo de configuração customizado do Nginx
+    networks:
+      - escola_network  # Rede interna para comunicação entre os serviços
+
+# Definição da rede interna para os containers se comunicarem
+networks:
+  escola_network:
+    driver: bridge
+
+# Volume para persistência dos dados do banco de dados
+volumes:
+  postgres_data:

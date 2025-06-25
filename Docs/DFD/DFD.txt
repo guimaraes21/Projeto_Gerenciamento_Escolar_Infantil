@@ -1,0 +1,139 @@
+/*
+# Diagrama de Fluxo de Dados (DFD): Sistema de Gerenciamento Escolar Infantil
+
+Este arquivo apresenta o DFD do sistema, detalhando os fluxos de dados entre entidades externas, processos internos e armazenamentos. Serve como guia para entender a dinâmica de informações no sistema.
+
+- Nível 0: Diagrama de contexto geral.
+- Nível 1: Processos principais do sistema.
+- Nível 2: Detalhamento de processos críticos.
+
+## Nível 0 (Diagrama de Contexto)
+
+### Entidades Externas:
+- **Secretaria**: Gerencia informações administrativas e acadêmicas
+- **Professor**: Fornece e acessa informações sobre turmas, alunos e atividades
+- **Responsável pelo Aluno**: Acessa informações sobre o aluno e realiza pagamentos
+- **Direção Escolar**: Supervisiona e gerencia todos os processos da escola
+
+### Fluxos de Dados - Entrada:
+- Secretaria → Sistema: Dados de matrícula, dados de alunos, dados de professores, dados de turmas
+- Professor → Sistema: Registros de frequência, avaliações, requisições de materiais, planos de aula
+- Responsável pelo Aluno → Sistema: Dados pessoais, confirmação de comunicados, pagamentos
+- Direção Escolar → Sistema: Aprovações, comunicados, eventos escolares
+
+### Fluxos de Dados - Saída:
+- Sistema → Secretaria: Relatórios administrativos, registros acadêmicos, históricos de pagamentos
+- Sistema → Professor: Listas de alunos, histórico de frequência, histórico de avaliações
+- Sistema → Responsável pelo Aluno: Boletins, comunicados, cobranças, calendário de eventos
+- Sistema → Direção Escolar: Relatórios gerenciais, estatísticas de desempenho, situação financeira
+
+## Nível 1
+
+### Processos Principais:
+
+1. **Gestão de Alunos**
+   - Entrada: Dados pessoais, documentos, informações de contato
+   - Saída: Cadastro de aluno, ficha de matrícula
+   - Armazenamento: Aluno, Matrícula
+
+2. **Gestão de Professores**
+   - Entrada: Dados pessoais, formação acadêmica, disponibilidade
+   - Saída: Cadastro de professor, atribuição de turmas
+   - Armazenamento: Professor
+
+3. **Gestão de Turmas**
+   - Entrada: Dados das turmas, capacidade, faixa etária
+   - Saída: Turmas formadas, atribuição de professores e alunos
+   - Armazenamento: Turma, Matrícula
+
+4. **Controle de Frequência**
+   - Entrada: Registro diário de presença
+   - Saída: Relatórios de frequência, notificações de faltas
+   - Armazenamento: Frequência, Aula
+
+5. **Gestão de Avaliações**
+   - Entrada: Dados de avaliações, notas/conceitos
+   - Saída: Boletins, histórico escolar
+   - Armazenamento: Avaliação
+
+6. **Controle Financeiro**
+   - Entrada: Valores de mensalidade, registros de pagamento
+   - Saída: Recibos, cobranças, relatórios financeiros
+   - Armazenamento: Pagamento
+
+7. **Controle de Materiais**
+   - Entrada: Dados de estoque, requisições
+   - Saída: Aprovações, controle de estoque
+   - Armazenamento: Material, RequisicaoMaterial
+
+8. **Gestão de Eventos**
+   - Entrada: Dados de eventos, calendário escolar
+   - Saída: Programação de eventos, convites
+   - Armazenamento: Evento, ParticipacaoEvento
+
+9. **Sistema de Comunicação**
+   - Entrada: Conteúdo de comunicados, público-alvo
+   - Saída: Comunicados enviados, confirmações de leitura
+   - Armazenamento: Comunicado, RecebimentoComunicado
+
+10. **Gerenciamento de Aulas**
+    - Entrada: Horários, disciplinas, conteúdo programático
+    - Saída: Quadro de horários, planos de aula
+    - Armazenamento: Aula, Disciplina
+
+## Nível 2 - Refinamento do processo "Controle de Frequência"
+
+### Sub-processos:
+
+1. **Registro de Presença**
+   - Entrada: Professor → Lista de alunos, data da aula
+   - Processo: Marcação de presença/ausência para cada aluno
+   - Saída: Registros de frequência diária
+   - Armazenamento: Frequência
+
+2. **Análise de Frequência**
+   - Entrada: Registros de frequência acumulados
+   - Processo: Cálculo de percentuais de frequência, identificação de faltas recorrentes
+   - Saída: Estatísticas de frequência, alertas de baixa frequência
+   - Armazenamento: Frequência
+
+3. **Notificação de Ausências**
+   - Entrada: Alertas de baixa frequência, justificativas
+   - Processo: Preparação e envio de notificações aos responsáveis
+   - Saída: Comunicados sobre faltas
+   - Armazenamento: Frequência, Comunicado
+
+4. **Justificativa de Faltas**
+   - Entrada: Responsável → Documentação de justificativa
+   - Processo: Análise e registro de justificativas
+   - Saída: Atualização do status de faltas (justificadas/não justificadas)
+   - Armazenamento: Frequência
+
+## Nível 2 - Refinamento do processo "Gestão de Avaliações"
+
+### Sub-processos:
+
+1. **Criação de Avaliações**
+   - Entrada: Professor → Dados da avaliação (tipo, data, conteúdo)
+   - Processo: Definição de parâmetros da avaliação
+   - Saída: Avaliação cadastrada no sistema
+   - Armazenamento: Avaliação
+
+2. **Registro de Resultados**
+   - Entrada: Professor → Conceitos/notas dos alunos
+   - Processo: Lançamento de resultados por aluno
+   - Saída: Avaliações com resultados registrados
+   - Armazenamento: Avaliação
+
+3. **Geração de Boletins**
+   - Entrada: Conjunto de avaliações do período
+   - Processo: Compilação de resultados por aluno
+   - Saída: Boletins individuais
+   - Armazenamento: Avaliação
+
+4. **Análise de Desempenho**
+   - Entrada: Histórico de avaliações
+   - Processo: Análise estatística e pedagógica dos resultados
+   - Saída: Relatórios de desempenho, recomendações pedagógicas
+   - Armazenamento: Avaliação
+*/
