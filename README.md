@@ -240,7 +240,7 @@ Este projeto terá continuidade com o desenvolvimento do frontend e a implementa
 - Luiz Felipe S. de Souza
 - Natan Borges Leme
 - Leonardo Frazão Sano
-- 
+- Vitor Pinheiro Guimarães
 
 ---
 
