@@ -6,6 +6,9 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const db = require('./config/database');
+const http = require('http');
+const socketIo = require('socket.io');
+const path = require('path');
 
 // Importação das rotas
 const alunoRoutes = require('./routes/alunoRoutes');
@@ -25,7 +28,18 @@ const comunicadoRoutes = require('./routes/comunicadoRoutes');
 const recebimentoComunicadoRoutes = require('./routes/recebimentoComunicadoRoutes');
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST", "PUT", "DELETE"]
+    }
+});
 const PORT = process.env.PORT || 3000;
+
+// Configurar EJS como template engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Middlewares
 app.use(cors());
@@ -63,9 +77,67 @@ app.get('/', (req, res) => {
     res.send('API do Sistema de Gerenciamento Escolar Infantil');
 });
 
-// Inicialização do servidor
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+// Rota EJS de exemplo
+app.get('/view/alunos', (req, res) => {
+    res.render('alunos', { title: 'Gerenciamento de Alunos' });
 });
 
-module.exports = app;
+app.get('/view/professores', (req, res) => {
+    res.render('professores', { title: 'Gerenciamento de Professores' });
+});
+
+// WebSocket - Gerenciamento de eventos em tempo real
+io.on('connection', (socket) => {
+    console.log('Novo cliente conectado:', socket.id);
+
+    // Evento quando um aluno é criado
+    socket.on('aluno:created', (data) => {
+        console.log('Aluno criado:', data);
+        io.emit('aluno:created', data);
+    });
+
+    // Evento quando um aluno é atualizado
+    socket.on('aluno:updated', (data) => {
+        console.log('Aluno atualizado:', data);
+        io.emit('aluno:updated', data);
+    });
+
+    // Evento quando um aluno é deletado
+    socket.on('aluno:deleted', (data) => {
+        console.log('Aluno deletado:', data);
+        io.emit('aluno:deleted', data);
+    });
+
+    // Evento quando um professor é criado
+    socket.on('professor:created', (data) => {
+        console.log('Professor criado:', data);
+        io.emit('professor:created', data);
+    });
+
+    // Evento quando um professor é atualizado
+    socket.on('professor:updated', (data) => {
+        console.log('Professor atualizado:', data);
+        io.emit('professor:updated', data);
+    });
+
+    // Evento quando um professor é deletado
+    socket.on('professor:deleted', (data) => {
+        console.log('Professor deletado:', data);
+        io.emit('professor:deleted', data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Cliente desconectado:', socket.id);
+    });
+});
+
+// Disponibilizar io para as rotas
+app.set('io', io);
+
+// Inicialização do servidor
+server.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`WebSocket habilitado`);
+});
+
+module.exports = { app, io };

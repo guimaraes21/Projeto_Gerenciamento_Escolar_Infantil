@@ -57,6 +57,26 @@ services:
     networks:
       - escola_network  # Rede interna para comunicação entre os serviços
 
+  # Serviço do frontend React + TypeScript com Vite
+  frontend:
+    build:
+      context: ./FRONTEND
+      dockerfile: ../Dockerfile.frontend  # Dockerfile específico para o frontend
+    container_name: escola_infantil_frontend  # Nome do container do frontend
+    restart: always  # Reinicia automaticamente em caso de falha
+    depends_on:
+      - app  # Garante que o backend suba antes do frontend
+    environment:
+      VITE_API_URL: /api  # URL relativa da API backend (via proxy)
+      VITE_SOCKET_URL: ""  # URL relativa do WebSocket (via proxy)
+    ports:
+      - "5173:5173"  # Mapeia a porta do Vite para acesso externo
+    volumes:
+      - ./FRONTEND:/app  # Monta o código-fonte local no container
+      - /app/node_modules  # Garante que os módulos do Node.js fiquem isolados no container
+    networks:
+      - escola_network  # Rede interna para comunicação entre os serviços
+
 # Definição da rede interna para os containers se comunicarem
 networks:
   escola_network:

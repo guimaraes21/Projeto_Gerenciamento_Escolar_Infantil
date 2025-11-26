@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .info {
+            padding: 15px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><%= title %></h1>
+        <div class="info">
+            <p><strong>Esta é uma view EJS para gerenciamento de alunos.</strong></p>
+            <p>Para acessar o CRUD completo com React, utilize o front-end disponível em: <a href="http://localhost:5173" target="_blank">http://localhost:5173</a></p>
+            <p>Esta view demonstra o uso de EJS (Embedded JavaScript) como template engine server-side.</p>
+        </div>
+        <div>
+            <h2>Funcionalidades disponíveis via API:</h2>
+            <ul>
+                <li>GET /api/alunos - Listar todos os alunos</li>
+                <li>GET /api/alunos/:id - Buscar aluno por ID</li>
+                <li>POST /api/alunos - Criar novo aluno</li>
+                <li>PUT /api/alunos/:id - Atualizar aluno</li>
+                <li>DELETE /api/alunos/:id - Deletar aluno</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
