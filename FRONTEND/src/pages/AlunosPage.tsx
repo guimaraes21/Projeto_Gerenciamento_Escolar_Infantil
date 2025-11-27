@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { alunosAPI } from '../services/api';
 import { Aluno } from '../types';
 import { useWebSocket } from '../hooks/useWebSocket';
 import '../styles/Alunos.css';
 
 const AlunosPage: React.FC = () => {
+  const navigate = useNavigate();
   const [alunos, setAlunos] = useState<Aluno[]>([]);
   const [formData, setFormData] = useState<Aluno>({
     nome: '',
@@ -142,17 +144,26 @@ const AlunosPage: React.FC = () => {
         <h1>Gerenciamento de Alunos</h1>
         <div className="connection-status">
           WebSocket: <span className={isConnected ? 'connected' : 'disconnected'}>
-            {isConnected ? '🟢 Conectado' : '🔴 Desconectado'}
+            {isConnected ? 'Conectado' : 'Desconectado'}
           </span>
         </div>
       </div>
 
-      <button 
-        className="btn btn-primary"
-        onClick={() => setShowForm(!showForm)}
-      >
-        {showForm ? 'Cancelar' : '+ Novo Aluno'}
-      </button>
+      <div className="action-buttons">
+        <button 
+          className="btn btn-secondary"
+          onClick={() => navigate('/')}
+        >
+          Voltar para Home
+        </button>
+        
+        <button 
+          className="btn btn-primary"
+          onClick={() => setShowForm(!showForm)}
+        >
+          {showForm ? 'Cancelar' : '+ Novo Aluno'}
+        </button>
+      </div>
 
       {showForm && (
         <form onSubmit={handleSubmit} className="aluno-form">

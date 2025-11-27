@@ -10,11 +10,11 @@ const App: React.FC = () => {
       <div className="app">
         <nav className="navbar">
           <div className="navbar-brand">
-            <h1>🏫 Sistema Escolar Infantil</h1>
+            <h1>Sistema Escolar Infantil</h1>
           </div>
           <div className="navbar-menu">
-            <Link to="/alunos" className="nav-link">👦 Alunos</Link>
-            <Link to="/professores" className="nav-link">👨‍🏫 Professores</Link>
+            <Link to="/alunos" className="nav-link">Alunos</Link>
+            <Link to="/professores" className="nav-link">Professores</Link>
           </div>
         </nav>
 
@@ -26,19 +26,19 @@ const App: React.FC = () => {
                 <p>Selecione uma opção no menu acima para começar.</p>
                 <div className="features">
                   <div className="feature-card">
-                    <h3>✅ React + TypeScript</h3>
+                    <h3>React + TypeScript</h3>
                     <p>Interface moderna e tipada</p>
                   </div>
                   <div className="feature-card">
-                    <h3>⚡ Vite</h3>
+                    <h3>Vite</h3>
                     <p>Build rápido e otimizado</p>
                   </div>
                   <div className="feature-card">
-                    <h3>🔌 WebSocket</h3>
+                    <h3>WebSocket</h3>
                     <p>Atualizações em tempo real</p>
                   </div>
                   <div className="feature-card">
-                    <h3>🐳 Docker</h3>
+                    <h3>Docker</h3>
                     <p>Backend containerizado</p>
                   </div>
                 </div>
